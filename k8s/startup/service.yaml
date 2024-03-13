@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: startup-probe
 spec:
-  type: LoadBalancer
   selector:
     app: startup-probe
   ports:
