@@ -4,9 +4,16 @@ const port = 3000
 
 let FAIL_READINESS_PROBE = false;
 let FAIL_LIVENESS_PROBE = false;
+let SUCCEED_STARTUP_PROBE = false;
 
 app.get('/', (req, res) => {
+  console.log('/ called')
   res.send('Hello World!')
+})
+
+app.get('/succeed-startup', (req, res) => {
+  SUCCEED_STARTUP_PROBE = true;
+  res.send('App is ready to start')
 })
 
 app.get('/break-liveness', (req, res) => {
@@ -35,6 +42,15 @@ app.get('/liveness', (req, res) => {
   }
 
   res.send('Ok')
+})
+
+app.get('/startup', (req, res) => {
+  if (SUCCEED_STARTUP_PROBE) {
+    res.send('Ok')
+    return;
+  }
+
+  res.sendStatus(503);
 })
 
 app.listen(port, () => {

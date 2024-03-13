@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: liveness-probe
+  labels:
+    app: liveness-probe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: liveness-probe
+  template:
+    metadata:
+      labels:
+        app: liveness-probe
+    spec:
+      containers:
+        - name: liveness-probe
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          image: us-central1-docker.pkg.dev/sandbox-347223/tmp/k8s-probes:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 3000

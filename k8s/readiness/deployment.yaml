@@ -16,6 +16,12 @@ spec:
     spec:
       containers:
         - name: readiness-probe
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 10
           image: us-central1-docker.pkg.dev/$GCP_PROJECT/tmp/k8s-probes:latest
           imagePullPolicy: Always
           resources:
