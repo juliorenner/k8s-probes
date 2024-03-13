@@ -53,6 +53,12 @@ app.get('/startup', (req, res) => {
   res.sendStatus(503);
 })
 
-app.listen(port, () => {
-  console.log(`K8S Probes app listening on port ${port}`)
-})
+
+// Delay server startup
+const delay = 10000;
+
+setTimeout(() => {
+  app.listen(port, () => {
+    console.log(`K8S Probes app listening on port ${port}`)
+  })
+}, delay);
