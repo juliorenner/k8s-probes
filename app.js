@@ -32,6 +32,8 @@ app.get('/readiness', (req, res) => {
     return;
   }
 
+  console.log('/readiness called')
+
   res.send('Ok')
 })
 
@@ -41,11 +43,13 @@ app.get('/liveness', (req, res) => {
     return;
   }
 
+  console.log('/liveness called')
   res.send('Ok')
 })
 
 app.get('/startup', (req, res) => {
   if (SUCCEED_STARTUP_PROBE) {
+    console.log('/startup called successfully')
     res.send('Ok')
     return;
   }
